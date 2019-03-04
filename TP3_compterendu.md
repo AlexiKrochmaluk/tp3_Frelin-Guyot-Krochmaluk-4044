@@ -1,20 +1,32 @@
-# TP 2
-## Variables d'environnement
+# TP 3
+## Commandes de base
 
-Dossier BASH : /.bashrc
-- LANG : codage et langue du système
-- PWD : chemin courant
-- OLDPWD : ancien chemin courant
-- SHELL : chemin du shell
-- _ : chemin de la commande printenv
+```console dpkg -l | tail -n 5 ``` pour afficher les 5 derniers packets installés.
+```console dpkg -l | wc -l ``` nous donne le nombre de paquets installés (505) ```console apt list --installed | wc -l ``` aussi (501). Dpkg, ne gère pas les dépendances, donc affiche plus de paquets que apt qui lui les gère et va donc compacter en un certains paquets.
+```console apt list | wc -l ``` nous donne le nombre de paquets téléchargeables (62482).
+```console alias maj="apt-get update" ```crée un alias pour mettre à jour le système.
+```console apt show fortunes ``` Le paquet fortunes contient 15000 biscuits Chinois. On l'installe avec ```console apt-get install fortunes ```
+Il existe 8 paquets permettant de jouer au sudoku ```console apt search sudoku ```
 
-SET MY_VAR existe dans le contexte de la première console, mais pas dans la deuxième car c'est une variable LOCALE.
-En transformant MY_VAR en variable d'environnement, elle devient disponible dans toutes les instances de console car elle est stockée dans les variables d'environnement.
+```console cat /var/log/apt/history.log | grep "install:" ``` Affiche les derniers paquets installés avec apt install.
 
-On crée la variable d'environnement NOMS avec export NOMS="Maxime Antonin", l'espace est bien géré.
+## Exercice 2
 
-Affichons les avec la commande : echo "Bonjour à vous, "$NOMS
+```console dpkg -S /bin/ls ``` /bin/ls se trouve dans le package coreutils. 
+La commande est
 
-Unset : la variable n'existe plus, valeur vide, la variable existe mais a une valeur vide.
+```console
+#!/bin/bash
 
-Afficher le chemin : echo '$HOME = '$HOME
+command=$1
+
+which $command | xargs dpkg -S
+```
+
+## Exercice 3
+
+```console [[ $(dpkg -l mon_paquet | wc -l) -eq 1 ]] && echo "Installé" || echo "Non Installé"```
+
+## Exercice 4
+
+## Exercice 5
